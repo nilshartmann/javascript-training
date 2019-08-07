@@ -1,0 +1,10 @@
+{
+  "overrides": [
+    {
+      "files": "js-webdev.html",
+      "options": {
+        "printWidth": 120
+      }
+    }
+  ]
+}
