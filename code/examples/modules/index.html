@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Module Expample</title>
+  </head>
+  <body></body>
+
+  <script type="module">
+    import Musician from "./Musician.js";
+
+    const m = new Musician("Lemmy", "Bass");
+    console.log(m.toString());
+    console.log(m instanceof Musician);
+  </script>
+</html>

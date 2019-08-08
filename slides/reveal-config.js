@@ -12,6 +12,13 @@ Reveal.addEventListener("ready", function(event) {
 // open all externals link in new tab
 $('a:not([href^="#"])').attr("target", "_blank");
 
+document.querySelectorAll(".reveal section pre > code").forEach(e => {
+  e.setAttribute("contenteditable", true);
+  e.setAttribute("data-trim", true);
+});
+
+// data-trim
+
 // Full list of configuration options available at:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
