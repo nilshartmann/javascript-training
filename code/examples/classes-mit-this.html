@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Klassen</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script>
+    class Person {
+      constructor(name) {
+        this.name = name;
+      }
+
+      greet() {
+        console.log("Hello, " + this.name);
+      }
+
+      greetDelayed() {
+        setTimeout(this.greet, 1000);
+      }
+    }
+
+    const p = new Person("Susi");
+    p.greetDelayed();
+  </script>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tag Function</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script>
+    function sayHello(phrase, ...parameters) {
+      for (let i = 0; i < parameters.length; i++) {
+        console.log(`${phrase} ${parameters[i]}`);
+      }
+    }
+
+    sayHello("Hallo", "Welt", "Klaus");
+
+    // Hallo Welt
+    // Hallo Klaus
+  </script>
+</html>

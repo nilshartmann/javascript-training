@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tag Function</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script>
+    function price(value, currency = "€") {
+      console.log(`${value} ${currency}`);
+    }
+
+    price("2.3", "$"); // 2.3 $
+    price("2.3"); // 2.3 €
+
+    // Exotisches Beispiel (Redux-like)
+    // Default-PArameter wird auch für undefined verwendet
+    function sayHello(phrase = "Hello", name) {
+      console.log(`${phrase} ${name}`);
+    }
+
+    sayHello(undefined, "Klaus"); // Hello Klaus
+    sayHello("Klaus"); // Klaus undefined
+  </script>
+</html>

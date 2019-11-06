@@ -439,39 +439,6 @@ printer(() => greet("World"));
 
         <!-- ============================================================================= -->
         <section>
-          <h3>JavaScript: truthy und falsy</h3>
-
-          <p>
-            Wenn ein Wert in einen Boolean (implizit oder explizit) konvertiert, <b>false</b> ergibt, nennt man ihn
-            <em>falsy</em>. In allen anderen Fällen <em>truthy</em>
-          </p>
-
-          <pre><code class="javascript">
-            // wird alles zu 'false' konvertiert, if blöcke werden also nicht ausgeführt
-            if (!true) { ... }
-            if (false) { ... }
-            if (null) { ... }
-
-            // Überraschung (?)
-            if (0) { ... }
-            if ("") { ... }
-          </code></pre>
-
-          <pre class="fragment"><code class="javascript">
-              // wird alles zu 'true' konvertiert, if blöcke werden also  ausgeführt
-              if (true) { ... }
-              if (!false) { ... }
-              if ("0") { ... }
-              if (" ") { ... }
-
-              // Überraschung (?)
-              if ([]) { ... } // leeres Array
-              if ({}) { ... } // leeres Objekt
-          </code></pre>
-        </section>
-
-        <!-- ============================================================================= -->
-        <section>
           <h3>JavaScript: Objekte</h3>
           <pre><code class="javascript">
 const person = {
@@ -609,21 +576,6 @@ lemmy.name // // Lemmy
 
 
           </code></pre>
-        </section>
-
-        <!-- ============================================================================= -->
-        <section>
-          <h3>Exceptions</h3>
-        </section>
-
-        <!-- ============================================================================= -->
-        <section>
-          <h3>for, while, switch</h3>
-        </section>
-
-        <!-- ============================================================================= -->
-        <section>
-          <h3>Scoping und Hoisting ????</h3>
         </section>
 
         <!-- ============================================================================= -->

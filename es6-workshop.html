@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>ES6 Workshop</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"
+    />
+    <link rel="stylesheet" href="slides/styles.css" />
+    <script src="slides/export.js"></script>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-state="title">
+          <h2>
+            <b>ES6 Workshop</b>
+          </h2>
+
+          <h4>
+            <span class="transparent-bg">
+              <a href="http://nilshartmann.net" target="_blank"
+                >Nils Hartmann</a
+              >
+              /
+              <a href="http://twitter.com/nilshartmann" target="_blank"
+                >@nilshartmann</a
+              >
+              /
+              <a href="mailto:nils@nilshartmann.net" target="_blank"
+                >E-Mail: nils@nilshartmann.net</a
+              >
+            </span>
+          </h4>
+        </section>
+
+        <section>
+          <h3>Agenda</h3>
+          <em>Was ist neu in ECMAScript 2015 / ES6</em>
+
+          <ul>
+            <ol>
+              Template Strings
+            </ol>
+            <ol class="todo">
+              Template Strings
+            </ol>
+          </ul>
+          <p>
+            Wo läuft ES6?
+            <a href="http://kangax.github.io/compat-table/es6/"
+              >http://kangax.github.io/compat-table/es6/</a
+            >
+          </p>
+        </section>
+
+        <section>
+          <h2>Teil I: Spracherweiterungen und -verbesserungen</h2>
+        </section>
+
+        <!-- ============================================================================= -->
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>let und const als Ersatz für var</h3>
+
+          <pre class="fragment"><code class="javascript">
+    // Variable
+    let alter = 42;
+    alter = 43; // OK
+  </code></pre>
+          <pre class="fragment"><code class="javascript">
+    
+    // Konstante
+    const name = "Nils";
+    name = "Klaus"; // TypeError: invalid assignment to const 'name'
+  </code></pre>
+          <pre class="fragment"><code class="javascript">
+    // Nur Referenzen sind konstant
+    const person = { 
+      name: "Nils"
+    }
+
+    person = "Klaus"; // TypeError: invalid assignment to const 'person'
+    person.name = "Klaus" // OK
+  </code></pre>
+        </section>
+
+        <!-- ==========================================================  -->
+        <section>
+          <h3>let und const als Ersatz für var</h3>
+          <h4 class="fragment">Block Scoping</h4>
+
+          <pre class="fragment"><code class="javascript">
+    // ES5: keine Sichtbarkeiten!
+    for (var i = 0; i < 2; i++) {
+      console.log(i);
+    }
+
+    console.log("Nach for", i); // i ist hier bekannt!
+  </code></pre>
+          <pre class="fragment"><code class="javascript">
+    // mit let (und const) ist j nur in der Schleife sichtbar
+    for (let j = 0; j &lt; 2; j++) {
+      console.log(j);
+    }
+
+    console.log("Nach for", j); // Reference-Error: j is not defined
+         </code></pre>
+        </section>
+
+        <!-- ==========================================================  -->
+        <section>
+          <h3>let und const</h3>
+          <h4>Kein Hoisting</h4>
+          <pre class="fragment"><code class="javascript">
+function A() { 
+  console.log(num); 
+  
+  num = 1; 
+  console.log(num); 
+  
+  var num = 2;
+  console.log(num); 
+}
+
+A(); // Ausgabe: undefined, 1, 2
+    </code></pre>
+          <pre class="fragment"><code class="javascript">
+function B() { 
+  console.log(num); 
+  
+  num = 1;
+  console.log(num);
+  
+  let num = 2;
+  console.log(num); 
+}
+
+B(); // ReferenceError: can't access lexical declaration `num' before initialization
+
+           </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Template Strings</h3>
+          <pre><code class="javascript">
+
+        const name = "Susi";
+
+        const greet = `Hello, ${name}`; // Hello, Susi
+
+        const loudGreet = `Hello, ${name.toUpperCase()}` // Hello, SUSI
+
+        const evenLouder = `Hello, ${name}`.toUpperCase(); // HELLO, SUSI
+
+        // Mehrzeilige Strings erlaubt (Umbrüche bleiben erhalten)
+        const letter = `Dear reader,
+hope, you're doing find.
+Best,
+Paul`        
+      </code></pre>
+          <p class="fragment">
+            <a
+              href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/template_strings"
+              >Doku</a
+            >
+          </p>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Tag functions</h3>
+
+          <p>
+            Funktionen, die einen Template-String entgegennehmen und die Werte
+            für dessen Platzhalter
+          </p>
+
+          <pre><code class="javascript">
+            // Verwendung
+            const title = "Hallo";
+            const subtitle = "Welt";
+
+            // html ist eine tag-Function
+            html`<h1>${title}</h1><h2>${subtitle}</h2>`
+        </code></pre>
+
+          <pre class="fragment"><code class="javascript">
+            // Implementierung
+            function html(strings, ...parameters) {
+              // strings sind ein Array mit dem Strings
+              // Alle weiteren Parameter die eingeschlossenen Parameter
+
+              console.log("strings", strings); // [ "<h1>", "</h1><h2>", "</h2>" ]
+              console.log("parameters", parameters); // [ "Hallo", "Welt" ]
+            }
+        </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Fat Arrow Functions 1</h3>
+          <pre><code class="javascript">
+  const greet = (msg) => {
+    return "Hello, " + msg;
+  }
+  
+  // oder ganz kurz
+  const greet => "Hello, " + msg;
+  
+  // Verhalten wie "normale Funktion"
+  greet("World"); // Hello, World
+  greet(null), // Hello, null
+  greet(); // Hello, undefined
+  
+  </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Fat Arrow Functions 2</h3>
+          <pre><code class="javascript">
+    const chars = ['a', 'b', 'c'];
+
+    chars.map(c => c.toUpperCase()); // ['A','B','C']
+    </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Fat Arrow Functions 3</h3>
+          <pre><code class="javascript">
+    // Mehrere Parameter in Klammern
+    const sum = (n1, n2) => n1 + n2;
+
+    // Wenn Rückgabe-Wert Objekt ist, in () einschließen
+    const createPerson = (name, firstName) => ({
+      name: name,
+      firstName: firstName
+    })
+    </code></pre>
+        </section>
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Rest Parameter</h3>
+          <p>
+            Der Rest-Parameter enthält alle nicht explizit angegebenen Argumente
+            einer Funktion ("den Rest") als Array
+          </p>
+          <p>
+            Der Rest-Parameter muss stets als letzter Parameter angegeben werden
+          </p>
+
+          <pre class="fragment"><code class="javascript">
+function sayHello(phrase, ...parameters) {
+  for (let i = 0; i < parameters.length; i++) {
+    console.log(`${phrase} ${parameters[i]}`);
+  }
+}
+
+sayHello("Hallo", "Welt", "Klaus");
+
+// Hallo Welt
+// Hallo Klaus            
+
+            </code></pre>
+
+          <p class="fragment">
+            Im Gegensatz zum (alten) arguments-Objekt "echtes" Array
+          </p>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Default Parameter</h3>
+          <p>Funktionsparametern können Default-Werte angegeben werden</p>
+
+          <pre class="fragment"><code class="javascript">
+function price(value, currency = "€") {
+  console.log(`${value} ${currency}`);
+}
+
+price("2.3", "$"); // 2.3 $
+price("2.3"); // 2.3 €
+          </code></pre>
+
+          <pre class="fragment"><code class="javascript">
+// Exotisches Beispiel (Redux-like)
+// Default-Parameter wird auch bei undefined verwendet
+function sayHello(phrase = "Hello", name) {
+  console.log(`${phrase} ${name}`);
+}
+
+sayHello(undefined, "Klaus"); // Hello Klaus
+sayHello("Klaus"); // Klaus undefined
+          </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Erweiterte Objekt-Literale 1</h3>
+          <h4>Shorthand notation</h4>
+
+          <pre><code class="javascript">
+           
+const firstName = "Klaus";
+const lastName = "Müller";
+
+// ES5
+const person = {
+  firstname: firstName,
+  lastName: lastName,
+  age: 32
+}
+
+// ES6
+const person = {
+  firstname,
+  lastName,
+  age: 32
+}
+          </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Destrukturiering</h3>
+          <h4>Bei Objekten</h4>
+
+          <pre><code class="javascript">
+  const person = {
+    firstname: "Klaus",
+    lastName: "Müller",
+    age: 32
+  }
+
+  const {firstName, lastName} = person;
+  console.log(firstName); // Klaus
+  console.log(lastName); // Müller
+
+
+  // umbennen
+  const {lastName: name} = person;
+  console.log(name); // Müller
+
+            </code></pre>
+        </section>
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Destrukturiering</h3>
+          <h4>Beispiel: Mit Funktionsparametern</h4>
+
+          <pre><code class="javascript">
+function greet({firstName, lastName}) {
+  return `Hello, ${firstName} ${lastName}`;
+}
+
+greet({
+  firstname: "Klaus",
+  lastName: "Müller",
+  age: 32
+)};
+
+      </code></pre>
+        </section>
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Destrukturiering</h3>
+          <h4>Bei Arrays</h4>
+
+          <pre><code class="javascript">
+
+const chars = ['a', 'b', 'c'];
+
+const [a, , c] = chars;
+console.log(a) // "a"
+console.log(b) // "b"
+
+
+
+            </code></pre>
+          <pre class="fragment"><code class="javascript">
+                // Beispiel: React
+
+                const [name, setName] = React.useState("Klaus");
+                
+                // name ist String
+                // setName Funktion
+          </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Erweiterte Objekt-Literale 2</h3>
+          <h4>Computed Properties</h4>
+
+          <pre><code class="javascript">
+
+function getId() { return "ID1" }
+
+const persons = {
+  [`getId()`]: { 
+    name: "Klaus"
+  }
+}
+
+console.log(persons.ID1.name) // Klaus
+
+    </code></pre>
+        </section>
+
+        <section>
+          <h3 class="todo">Übung...</h3>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Spread Operator</h3>
+          <p>Zerlegt ein Array oder Objekt in einzelne Parameter</p>
+
+          <pre class="fragment"><code class="javascript">
+            
+          </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h2>Teil 2: Klassen und Module</h2>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>JavaScript: Klassen</h3>
+
+          <pre><code class="javascript">
+              class Person {
+                constructor(name) {
+                    this._name = name;
+                }
+                
+                get name() {
+                    return this._name;
+                }
+                
+                set name(newName) {
+                    this._name = newName;
+                }
+                
+                toString() { return "Person: " + this.name + ""; }
+            }
+            
+            const p = new Person("Susi");
+            p.toString() // Person: Susi
+          </code></pre>
+
+          <p class="fragment">
+            Wichtig: Zugriff auf Instanz-Member innerhalb einer Klasse immer mit
+            <code>this.</code>
+          </p>
+
+          <pre class="fragment"><code class="javascript">
+              p.name // Susi (getter-Aufruf)
+              p.name = "Lisa"; // setter-Aufruf
+
+              console.log(p.toString()) // Person: Lisa;
+            </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>JavaScript: Klassen #2</h3>
+          <h4>Vererbung</h4>
+
+          <pre><code class="javascript">
+  class Musician extends Person {
+    constructor(name, instrument) {
+      // super-Aufruf muss immer als Erstes kommen
+      super(name);
+      this._instrument = instrument;
+    }
+  
+    toString() { return super.toString() + " plays " + this._instrument}
+  }            
+  
+  const lemmy = new Musician("Lemmy", "Bass");
+  lemmy.toString(); // Lemmy plays Bass
+  lemmy.name // // Lemmy
+  
+  
+            </code></pre>
+        </section>
+        <!-- ============================================================================= -->
+        <section>
+          <h3>JavaScript: Klassen #2</h3>
+          <h4>Statische Funktionen</h4>
+
+          <pre><code class="javascript">
+  class Person {
+    constructor(name) {
+        this.name = name;
+    }
+
+    static formatName(first, last) { return `${first} ${last}` };
+
+    static getPersonName() {
+      // this zeigt nicht auf die Instanz,
+      // sondern die Klasse
+
+      return this.name;  // 😵
+    }
+}
+
+// Kann ohne Instanz aufgerufen werden:
+Person.formatName("Klaus", "Müller"); // Klaus Müller
+
+const p = new Person("Susi");
+p.name; // Susi
+p.getPersonName(); // Person 😵
+      
+              </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>this-Binding in Klassen</h3>
+          <h4>Wie sieht die Ausgabe aus? Und warum?</h4>
+
+          <pre><code class="javascript">
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  greet() {
+    console.log("Hello, " + this.name);
+  }
+
+  greetDelayed() {
+    setTimeout(this.greet, 1000);
+  }
+}
+
+const p = new Person("Susi");
+p.greetDelayed(); // 🤔
+        
+                </code></pre>
+        </section>
+
+        <section>
+          <h3>this-Binding in Klassen</h3>
+          <h4>Lösung mit Arrow-Funktionen</h4>
+          <pre class="fragment"><code class="javascript">
+class Person {
+  constructor(name) { ... }
+
+  greet() {
+    console.log("Hello, " + this.name);
+  }
+
+  greetDelayed() {
+    setTimeout(() => this.greet(), 1000);
+  }
+}
+                                </code></pre>
+          <h4 class="fragment">
+            Lösung mit Class Properties (noch kein Standard)
+          </h4>
+          <pre class="fragment"><code class="javascript">
+  class Person {
+    constructor(name) { ... }
+  
+    greet = () => {
+      console.log("Hello, " + this.name);
+    }
+  
+    greetDelayed() {
+      setTimeout(this.greet, 1000);
+    }
+  }
+                  </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Module</h3>
+          <p>Mit Modulen sind Dateiinhalte nicht mehr global sichtbar</p>
+          <p>Module bestimmen explizit, was außerhalb verwendet werden darf</p>
+          <p>
+            Module geben explizit an, was sie aus anderen Modulen verwenden
+            wollen
+          </p>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Module</h3>
+          <h4>Default Exporte</h4>
+          <p>
+            <em
+              >Objekte, Funktionen, Klassen etc müssen explizit
+              <b>exportiert</b> und <b>importiert</b> werden</em
+            >
+          </p>
+
+          <pre><code class="javascript">
+            // src/domain/Person.js
+            export default class Person { ... }
+
+            oder
+
+            class Person { ... }
+            export default Person
+          </code></pre>
+
+          <pre class="fragment"><code class="javascript">
+              // src/domain/Person.js
+              export default function createPerson() { ... }
+  
+              oder
+  
+              function createPerson() { ... }
+              export default createPerson;
+            </code></pre>
+
+          <pre class="fragment"><code class="javascript">
+                Nur EIN Default Export erlaubt;
+                export default function createPerson() { ... }
+                export default class Person { ... } // KONFLIKT
+              </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Module</h3>
+          <h4>Importieren</h4>
+          <p class="fragment">
+            Beim importieren geben wir Pfade(!) an (im Browser auch mit
+            <code>.js</code>-Endung!)
+          </p>
+
+          <pre class="fragment"><code class="javascript">
+              // src/domain/Musician.js
+              import Person from "./Person.js";
+  
+              export default class Musician extends Person { ... }
+            </code></pre>
+
+          <pre class="fragment"><code class="javascript">
+                // src/App.js
+                import Musician from "./domain/Musician.js";
+  
+                const lemmy = new Musician("Lemmy", "Bass");
+              </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Module</h3>
+          <h4>Benannte Exporte</h4>
+          <p class="fragment">
+            Ein Modul kann neben einem Default auch beliebig viele
+            <b>benannte Exporte</b> haben
+          </p>
+
+          <pre class="fragment"><code class="javascript">
+                // src/domain/Person.js
+                export default class Person { ...}
+                export function createPerson() { ... }
+                export function removePerson() { ... }
+              </code></pre>
+
+          <pre class="fragment"><code class="javascript">
+                  // src/domain/Person.js
+                  export default class Person { ...}
+                  function createPerson() { ... }
+                  function removePerson() { ... }
+
+                  export { createPerson, removePerson }
+                </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Module</h3>
+          <h4>Benannte Importe</h4>
+          <pre class="fragment"><code class="javascript">
+                    // src/App.js
+                    import { createPerson } from "./Person.js"
+              </code></pre>
+          <pre class="fragment"><code class="javascript">
+                // Default und benannten Export importieren
+                import Person, { createPerson } from "./Person.js"
+              </code></pre>
+          <pre class="fragment"><code class="javascript">
+                  // Alles importieren
+                  import { * as P } from "./Person.js"
+  
+                  P.createPerson();
+                </code></pre>
+          <pre class="fragment"><code class="javascript">
+                    // Umbennen
+                    import { createPerson as create } from "./Person.js"
+    
+                    create();
+                  </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Module</h3>
+          <h4>Bundling</h4>
+
+          <p>Nicht alle Browser unterstützen Module nativ</p>
+          <p>
+            Es gibt faktisch mehr als ein Modulsystem (zum Beispiel CommonJS aus
+            Node.JS)
+          </p>
+
+          <p>
+            Mit einem Bundler (z.B.
+            <a href="http://webpack.github.io/">Webpack</a> oder
+            <a href="https://rollup.js.org">Rollup</a>) werden die Module im
+            Build "aufgelöst" und in <b>eine</b> Datei geschrieben
+          </p>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3 class="todo">Promise und async/await</h3>
+        </section>
+
+        <section data-state="es6-exkurs">
+          <h3>Alternative zu Promises</h3>
+          <h2>async / await</h2>
+          <p>Erlauben es, asynchronen Code "linear" hinzuschreiben</p>
+          <ul class="fragment">
+            <li>Seit ECMASCript 2017 Standard</li>
+            <li>Babel und TypeScript können nach ES5 compilieren</li>
+            <li>Promise Polyfill für ältere Browser verwenden</li>
+          </ul>
+        </section>
+
+        <section data-state="es6-exkurs">
+          <h3>async / await</h3>
+          <ul>
+            <li class="fragment">
+              <code>async</code> definiert "async functions"
+            </li>
+            <li class="fragment">
+              <code>async</code> functions liefern&nbsp; <b>immer</b> ein
+              Promise zurück:
+              <pre><code class="javascript" contenteditable data-trim>
+  async function greet(name) {
+    return `Hello, ${name}`;
+  }
+  
+  const greeting = greet('Klaus');
+  
+  // greeting ist ein Promise!
+  console.log(greeting instanceof Promise); // => true
+  console.log(greeting) // => Promise {&lt;resolved>: "Hello, Klaus"}
+                  </code></pre>
+            </li>
+            <li class="fragment">
+              <code>async</code> function als Fat Arrow function:
+              <pre><code class="javascript" contenteditable data-trim>
+  const greet = async (name) => `Hello, ${name}`;                
+    
+  const greeting = greet('Klaus');
+    
+  // greeting ist ein Promise!
+  console.log(greeting instanceof Promise); // => true
+  console.log(greeting) // => Promise {&lt;resolved>: "Hello, Klaus"}
+                    </code></pre>
+            </li>
+            <li class="fragment">
+              Nur in
+              <b>async functions</b> kann <code>await</code> verwendet werden!
+            </li>
+          </ul>
+        </section>
+
+        <section data-state="es6-exkurs">
+          <h3>async / await</h3>
+          <p><code>await</code> wartet auf erfüllte Promises</p>
+          <pre
+            class="fragment"
+          ><code class="javascript" contenteditable data-trim>
+  async function greet(name) {
+    return `Hello, ${name}`;
+  }
+  
+  // oder:
+  function greet(name) { return new Promise(...); }
+  
+  async function sayWhat(name) {
+    const greeting = await greet(name);
+  
+    // ...Achtung! Hier zwischen kann Zeit vergehen...
+  
+    // greeting ist ein String!
+    console.log(greeting); // => Hello, ...
+  }
+                    </code></pre>
+        </section>
+        <section data-state="es6-exkurs">
+          <h3>async / await</h3>
+          <p>
+            Statt <code>then</code> bzw <code>catch</code> werden mehrere
+            <code>await</code> Statements bzw Exception Handling verwendet:
+          </p>
+          <pre
+            class="fragment"
+          ><code class="javascript" contenteditable data-trim>
+  // Liefert ein Promise zurück
+  async function loadUser(username) { . . . };
+  async function loadProfileDate(userId) { . . .};
+  
+  async function loadData() {
+    try {
+      const user = await loadUser('klaus');
+      const profile = await loadProfileData(user.userId);
+    } catch (e) {
+      console.error("Something failed")
+    }
+  }
+                      </code></pre>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+      ## Geschafft ;-)
+      ### Vielen Dank für Eure Teilnahme!
+  
+      **Kontakt:**
+      * <a href="mailto:nils@nilshartmann.net">nils@nilshartmann.net</a> 
+      *<a href="https://xing.to/nilshartmann" target="_blank">Xing</a>
+      *<a href="https://twitter.com/nilshartmann" target="_blank">@nilshartmann</a>
+  </textarea
+          >
+        </section>
+      </div>
+    </div>
+
+    <script src="slides/reveal.js/lib/js/head.min.js"></script>
+    <script src="slides/reveal.js/js/reveal.js"></script>
+    <script src="slides/reveal.js/lib/jquery-2.2.4.js"></script>
+    <script src="slides/reveal-config.js"></script>
+  </body>
+</html>
