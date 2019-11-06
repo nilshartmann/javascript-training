@@ -427,11 +427,46 @@ console.log(persons.ID1.name) // Klaus
         <!-- ============================================================================= -->
         <section>
           <h3>Spread Operator</h3>
-          <p>Zerlegt ein Array oder Objekt in einzelne Parameter</p>
+          <p>Zerlegt etwas in einzelne Parameter</p>
+          <p>
+            "etwas" muss
+            <a
+              href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator"
+              >Iterable</a
+            >
+            sein
+          </p>
+          <p>Iterables zum Beispiel Arrays, Set oder Map</p>
 
           <pre class="fragment"><code class="javascript">
-            
+            function add(num1, num2) {
+              console.log(num1 + num2);
+            }
+
+            const values = [ 1, 5 ];
+            add([...values]); // 6
+
           </code></pre>
+        </section>
+
+        <section>
+          <h3>Spread Operator</h3>
+          <p>Kann Objekte kopieren</p>
+          <pre class="fragment"><code class="javascript">
+    const person = { name: "Klaus", age: 32};
+
+    const newPerson = {...person};
+    // newPerson.name: Klaus, newPerson.age: 32
+
+    // hintere Werte überschreiben vordere
+    const newPerson = {name: "Peter", ...person};
+    // newPerson.name: Klaus, newPerson.age: 32
+
+    
+    // hintere Werte überschreiben vordere
+    const newPerson = {...person, name: "Peter"};
+    // newPerson.name: Peter, newPerson.age: 32
+            </code></pre>
         </section>
 
         <!-- ============================================================================= -->
@@ -737,30 +772,127 @@ class Person {
 
         <!-- ============================================================================= -->
         <section>
-          <h3 class="todo">Promise und async/await</h3>
+          <h2>Teil III: Promises und async/await</h2>
+        </section>
+        <section>
+          <h3>Ein Promise ist ein Versprechen auf einen Wert</h3>
+          <h4 class="fragment">Wird evtl. erst in der Zukunft eingelöst</h4>
+
+          <pre class="fragment"><code class="javascript" contenteditable>
+              // Wir haben ein Promise, dass nach einer Sekunde den String "Klaus" zurückgibt  
+              new Promise(
+                resolve => setTimeout( () => resolve("Klaus"), 1000)
+              ).then(name => console.log(name))
+                </code></pre>
         </section>
 
-        <section data-state="es6-exkurs">
+        <section>
+          <h3>Verkettete Ausführung</h3>
+
+          <pre><code class="javascript" contenteditable>
+// Wir haben ein Promise, dass nach einer Sekunde den String "Klaus" zurückgibt  
+const promise = new Promise(
+  resolve => setTimeout( () => resolve("Klaus"), 1000)
+)
+  </code></pre>
+          <pre
+            class="fragment"
+          ><code class="javascript" contenteditable>// 'then' gibt ein neues Promise zurück
+const promise2 = promise.then(name => `Hello, ${name}`);</code></pre>
+          <pre
+            class="fragment"
+          ><code class="javascript" contenteditable>promise2.then(greeting => console.log(greeting));
+// Ausgabe nach einer Sekunde: "Hello, Klaus"
+  </code></pre>
+        </section>
+        <section>
+          <h3>Fehler führen zum Abbruch der Chain</h3>
+          <h4>
+            Allerdings <b>muss</b> man etwas tun, um das mitzubekommen: catch()
+          </h4>
+        </section>
+
+        <section>
+          <h3>Catch-Klausel im Fehlerfall</h3>
+          <pre><code class="javascript" contenteditable>
+  const promise = new Promise( /* wie gesehen */ )
+    .then(name => {throw new Error("Unexpected Error") })
+    .then(greeting => console.log(greeting));
+    .catch(error => console.error(`Greeting failed: ${error}`))
+  
+    // Ausgabe: Greeting failed: Unexpected error
+    </code></pre>
+        </section>
+
+        <section>
+          <h3>Mehr zu Promises</h3>
+          <h4 class="fragment">Erzeugen I</h4>
+          <pre class="fragment"><code class="javascript" contenteditable>
+const p = new Promise(resolve => { ... }, error => { ... });            
+  </code></pre>
+          <h4 class="fragment">Erzeugen II</h4>
+          <pre class="fragment"><code class="javascript" contenteditable>
+// Wird sofort aufgelöst
+const p = Promise.resolve("Klaus");            
+</code></pre>
+          <h4 class="fragment">Warten auf mehrere Promises</h4>
+          <pre class="fragment"><code class="javascript" contenteditable>
+Promise.all( [p1, p2] )
+  .then( (result1, result2) => {
+    console.log(`All promises resolved: ${result1} ${result2}`);
+  });
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Promises: Asynchroner Programmfluss</h3>
+          <pre class="fragment"><code class="javascript" contenteditable>
+console.log("1");
+const p = new Promise()
+    .then(name => `Hello, ${name}`)
+    .then(greeting => console.log(greeting));
+console.log("2");    
+    </code></pre>
+          <p>Frage: wie sieht die Ausgabe auf der Konsole aus? 🤔</p>
+        </section>
+
+        <section>
           <h3>Alternative zu Promises</h3>
           <h2>async / await</h2>
           <p>Erlauben es, asynchronen Code "linear" hinzuschreiben</p>
           <ul class="fragment">
             <li>Seit ECMASCript 2017 Standard</li>
-            <li>Babel und TypeScript können nach ES5 compilieren</li>
-            <li>Promise Polyfill für ältere Browser verwenden</li>
           </ul>
         </section>
-
         <section data-state="es6-exkurs">
           <h3>async / await</h3>
-          <ul>
-            <li class="fragment">
-              <code>async</code> definiert "async functions"
-            </li>
-            <li class="fragment">
-              <code>async</code> functions liefern&nbsp; <b>immer</b> ein
-              Promise zurück:
-              <pre><code class="javascript" contenteditable data-trim>
+          <p><code>await</code> wartet auf erfüllte Promises</p>
+          <pre
+            class="fragment"
+          ><code class="javascript" contenteditable data-trim>
+    function greet(name) { return new Promise(...); }
+    
+    // await kann nur in 'async'-Functions verwendet werden
+    async function sayWhat(name) {
+      const greeting = await greet(name);
+    
+      // ...Achtung! Hier zwischen kann Zeit vergehen...
+    
+      // greeting ist ein String!
+      console.log(greeting); // => Hello, ...
+    }
+                      </code></pre>
+        </section>
+        <section>
+          <h3>async / await</h3>
+          <p><code>async</code> definiert "async functions"</p>
+          <p class="fragment">
+            <code>async</code> functions liefern&nbsp; <b>immer</b> ein Promise
+            zurück:
+          </p>
+          <pre
+            class="fragment"
+          ><code class="javascript" contenteditable data-trim>
   async function greet(name) {
     return `Hello, ${name}`;
   }
@@ -771,10 +903,12 @@ class Person {
   console.log(greeting instanceof Promise); // => true
   console.log(greeting) // => Promise {&lt;resolved>: "Hello, Klaus"}
                   </code></pre>
-            </li>
-            <li class="fragment">
-              <code>async</code> function als Fat Arrow function:
-              <pre><code class="javascript" contenteditable data-trim>
+          <p class="fragment">
+            <code>async</code> function als Fat Arrow function:
+          </p>
+          <pre
+            class="fragment"
+          ><code class="javascript" contenteditable data-trim>
   const greet = async (name) => `Hello, ${name}`;                
     
   const greeting = greet('Klaus');
@@ -783,37 +917,8 @@ class Person {
   console.log(greeting instanceof Promise); // => true
   console.log(greeting) // => Promise {&lt;resolved>: "Hello, Klaus"}
                     </code></pre>
-            </li>
-            <li class="fragment">
-              Nur in
-              <b>async functions</b> kann <code>await</code> verwendet werden!
-            </li>
-          </ul>
         </section>
 
-        <section data-state="es6-exkurs">
-          <h3>async / await</h3>
-          <p><code>await</code> wartet auf erfüllte Promises</p>
-          <pre
-            class="fragment"
-          ><code class="javascript" contenteditable data-trim>
-  async function greet(name) {
-    return `Hello, ${name}`;
-  }
-  
-  // oder:
-  function greet(name) { return new Promise(...); }
-  
-  async function sayWhat(name) {
-    const greeting = await greet(name);
-  
-    // ...Achtung! Hier zwischen kann Zeit vergehen...
-  
-    // greeting ist ein String!
-    console.log(greeting); // => Hello, ...
-  }
-                    </code></pre>
-        </section>
         <section data-state="es6-exkurs">
           <h3>async / await</h3>
           <p>

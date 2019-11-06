@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>this-Binding</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script>
+    const promise = new Promise(resolve =>
+      setTimeout(() => resolve("Klaus"), 1000)
+    );
+    const promise2 = promise.then(name => `Hello, ${name}`);
+    promise2.then(greeting => console.log(greeting));
+  </script>
+</html>
