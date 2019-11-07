@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Übung: Promises</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script>
+    // Übung: Promises
+
+    // getGreetingFromApi liefert einen Gruß für den Namen zurück,
+    // oder einen Fehler wenn kein name angegeben wurde.
+    // Im Erfolgsfall wird ein Objekt mit { phrase: ..., name: ... }
+    // zurückgegeben
+
+    // => Schritt 1: Vervollständige showGreeting
+    // => Schritt 2: rufe zum Testen showGreeting einmal mit einem Namen auf
+    //    showGreeting("World")
+    //      => Hello World
+    // => Schritt 2: rufe zum Testen showGreeting einmal ohne Namen auf
+    //     showGreeting();
+    //      => Must specify name
+
+    function getGreetingFromApi(name) {
+      if (!name) {
+        return Promise.reject("Must specify name");
+      }
+      return Promise.resolve({
+        phrase: "Hello",
+        name
+      });
+    }
+
+    function showGreeting(name) {
+      getGreetingFromApi(name);
+
+      // Das Ergebnis von getGreetingFromApi ist ein Promise, das zu einem Objekt aufgelöst wird
+      // ({ phrase: ..., name: ... })
+      // Verwandel im ersten Schritt ("then") das Objekt in einen String (mit Namen und Gruß)
+      // im zweiten Schritt (2. "then") gibt den String aus
+      // im Fehlerfalle gibt den übergebenen Fehler auf der Konsole aus
+    }
+  </script>
+</html>
