@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Map und Set</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script>
+    // Nur eindeutige Werte
+    const translations = new Map();
+    translations.set("hallo", "hello");
+    translations.set("tschüß", "bye");
+    translations.set("hallo", "hi");
+
+    console.log(translations.size); // 2
+    console.log(translations.get("hallo")); // hi
+
+    for (t of translations) {
+      console.log(t);
+    }
+
+    function dump(a1, a2) {
+      console.log("a1", a1);
+      console.log("a2", a2);
+    }
+
+    dump(...t);
+
+    // Nur eindeutige Werte
+    const names = new Set();
+    names.add("Klaus");
+    names.add("Susi");
+    names.add("Klaus");
+
+    console.log(names.size); // 2
+    console.log(names.has("Susi")); // true
+    console.log(names.has("Maja")); // false
+
+    names.delete("Susi");
+    console.log(names.has("Susi")); // false
+  </script>
+</html>

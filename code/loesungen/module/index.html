@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Module Übung</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script type="module">
+    import Application from "./Application.js";
+    import Size from "./Size.js";
+    import Component from "./Component.js";
+    import { InputField, Button } from "./UiComponents.js";
+
+    const application = new Application();
+    application.addComponents(
+      new Component(new Size(1, 2)),
+      new Button(new Size(3, 4), "OK")
+    );
+    application.addComponents(new Button(new Size(5, 6), "Cancel"));
+    application.addComponents(
+      InputField.passwordField(new Size(7, 8)),
+      InputField.textField(new Size(9, 10))
+    );
+    application.render();
+
+    const textField = InputField.textField(new Size(15, 15));
+    application.addComponents(textField);
+    textField.size = new Size(20, 20);
+  </script>
+</html>

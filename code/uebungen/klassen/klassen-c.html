@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Übung #1</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script>
+    // Erweitere die Klassen aus der vorherigen Übung:
+
+    //  - Die Klasse Component soll einen Methode bekommen, mit der man eine Funktion als Event-Listener anmelden kann,
+    //    die aufgerufen wird, wenn die Größe der Komponente in der setter-Funktion von size verändert wird
+    //    Nenne die Funktion "addSizeChangeListener"
+    //  - In der Setter-Funktion von Size soll der Event-Listener mit der neuen Größe aufgerufen werden
+    //    (natürlich nur, wenn ein Event-Listener gesetzt ist)
+
+    //  - Die App-Komponente soll eine Methode "onSizeChange" bekommen, die aufgerufen wird, wenn sich
+    //    eine der Komponenten in der Größe ändert. In der Methode soll die neue Größe ausgegeben werden
+    //      sowie die Anzahl der Komponenten in 'this._components'
+    //    Du musst also in addComponents einen EventListener bei allen Komponenten hinzufügen
+    //
+    //  - Verändere in einer der Komponenten nach dem Hinzufügen zur Application die Size, um zu testen,
+    //    dass der Listener funktioniert
+
+    // Dann sollte folgendes funktionieren:
+    // const application = new Application();
+    // application.addComponents(
+    //   new Component(new Size(1, 2)),
+    //   new Button(new Size(3, 4), "OK")
+    // );
+    // application.addComponents(new Button(new Size(5, 6), "Cancel"));
+
+    // ==> NEU IN ÜBUNG 2: ==>
+    // application.addComponents(
+    //   InputField.passwordField(new Size(7, 8)),
+    //   InputField.textField(new Size(9, 10))
+    // );
+    //
+    // application.render();
+    // ==> NEU IN ÜBUNG 3: ==>
+    // const textField = InputField.textField(new Size(15, 15));
+    // application.addComponents(textField);
+
+    // Hierdurch sollte der Event-Listener aufgerufen werden:
+    // textField.size = new Size(20, 20);
+
+    // Ausgabe auf der Konsole:
+    //   Component, size: Size: width: 1, height: 2
+    //   Button, size: Size: width: 3, height: 4 with label OK
+    //   Button, size: Size: width: 5, height: 6 with label Cancel
+    // ==> NEU IN ÜBUNG 2: ==>
+    //   InputField, size: Size: width: 7, height: 8 with type password
+    //   InputField, size: Size: width: 9, height: 10 with type text
+    // ==> NEU IN ÜBUNG 3: ==>
+    //   Size changed to: Size: width: 20, height: 20, number of components: 6
+  </script>
+</html>

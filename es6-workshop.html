@@ -44,19 +44,50 @@
         </section>
 
         <section>
-          <h3>Agenda</h3>
-          <em>Was ist neu in ECMAScript 2015 / ES6</em>
+          <h2>Agenda</h2>
+          <h3>Was ist neu in ECMAScript 2015 / ES6</h3>
 
-          <ul>
-            <ol>
-              Template Strings
-            </ol>
-            <ol class="todo">
-              Template Strings
-            </ol>
-          </ul>
           <p>
-            Wo läuft ES6?
+            Teil I: Sprachneuerungen und -verbesserungen
+          </p>
+          <p>
+            Teil II: Klassen und Module
+          </p>
+          <p>
+            Teil III: Promises und async/await
+          </p>
+
+          <p>
+            (Anhang: Blick in Eure Anwendung 👀)
+          </p>
+
+          <p>Jederzeit: Fragen und Diskussionen!</p>
+        </section>
+
+        <section>
+          <h3>JavaScript Versionen</h3>
+
+          <p class="fragment">
+            <b>ES5</b> erschienen 2009, "Referenzversion", die von allen
+            Browsern (inkl. IE) unterstützt wird
+          </p>
+          <p class="fragment">
+            <b>ES6</b>, <b>ECMAScript 2015</b>, großes Release von 2015,
+            <a href="http://kangax.github.io/compat-table/es6/"
+              >sehr viele Neuerungen</a
+            >
+            ("modernes JavaScript")
+          </p>
+          <p class="fragment">
+            <b>ES7, ES8, ES9 / ES2016, ES2017, ES2018, ...</b>: jährliche
+            Releases mit weniger Neuerungen
+          </p>
+          <p class="fragment">
+            <b>ES.Next</b>: "symbolischer" Name für das jeweils nächste Release
+          </p>
+
+          <p class="fragment">
+            Browsersupport für neue JavaScript-Versionen
             <a href="http://kangax.github.io/compat-table/es6/"
               >http://kangax.github.io/compat-table/es6/</a
             >
@@ -98,7 +129,7 @@
         <!-- ==========================================================  -->
         <section>
           <h3>let und const als Ersatz für var</h3>
-          <h4 class="fragment">Block Scoping</h4>
+          <h4>Block Scoping</h4>
 
           <pre class="fragment"><code class="javascript">
     // ES5: keine Sichtbarkeiten!
@@ -170,12 +201,6 @@ hope, you're doing find.
 Best,
 Paul`        
       </code></pre>
-          <p class="fragment">
-            <a
-              href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/template_strings"
-              >Doku</a
-            >
-          </p>
         </section>
 
         <!-- ============================================================================= -->
@@ -210,7 +235,7 @@ Paul`
 
         <!-- ============================================================================= -->
         <section>
-          <h3>Fat Arrow Functions 1</h3>
+          <h3>Fat Arrow Functions #1</h3>
           <pre><code class="javascript">
   const greet = (msg) => {
     return "Hello, " + msg;
@@ -226,10 +251,24 @@ Paul`
   
   </code></pre>
         </section>
-
         <!-- ============================================================================= -->
         <section>
-          <h3>Fat Arrow Functions 2</h3>
+          <h3>Fat Arrow Functions #2</h3>
+          <pre><code class="javascript">
+// Mehrere Parameter in Klammern
+const sum = (n1, n2) => n1 + n2;
+
+// Wenn Rückgabe-Wert Objekt ist, in () einschließen
+const createPerson = (last, first) => ({
+  lastName: last,
+  firstName: first
+});
+</code></pre>
+        </section>
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Fat Arrow Functions #3</h3>
+          <h4>Noch ein Beispiel</h4>
           <pre><code class="javascript">
     const chars = ['a', 'b', 'c'];
 
@@ -237,20 +276,6 @@ Paul`
     </code></pre>
         </section>
 
-        <!-- ============================================================================= -->
-        <section>
-          <h3>Fat Arrow Functions 3</h3>
-          <pre><code class="javascript">
-    // Mehrere Parameter in Klammern
-    const sum = (n1, n2) => n1 + n2;
-
-    // Wenn Rückgabe-Wert Objekt ist, in () einschließen
-    const createPerson = (name, firstName) => ({
-      name: name,
-      firstName: firstName
-    })
-    </code></pre>
-        </section>
         <!-- ============================================================================= -->
         <section>
           <h3>Rest Parameter</h3>
@@ -263,9 +288,9 @@ Paul`
           </p>
 
           <pre class="fragment"><code class="javascript">
-function sayHello(phrase, ...parameters) {
-  for (let i = 0; i < parameters.length; i++) {
-    console.log(`${phrase} ${parameters[i]}`);
+function sayHello(phrase, ...names) {
+  for (let i = 0; i < names.length; i++) {
+    console.log(`${phrase} ${names[i]}`);
   }
 }
 
@@ -312,25 +337,33 @@ sayHello("Klaus"); // Klaus undefined
           <h3>Erweiterte Objekt-Literale 1</h3>
           <h4>Shorthand notation</h4>
 
+          <p>ES5:</p>
+
           <pre><code class="javascript">
-           
 const firstName = "Klaus";
 const lastName = "Müller";
-
-// ES5
+          
 const person = {
-  firstname: firstName,
+  firstName: firstName,
   lastName: lastName,
   age: 32
 }
 
-// ES6
-const person = {
-  firstname,
-  lastName,
-  age: 32
-}
+
           </code></pre>
+
+          <p class="fragment">ES6:</p>
+
+          <pre class="fragment"><code class="javascript">
+    const firstName = "Klaus";
+    const lastName = "Müller";
+
+    const person = {
+      firstName,
+      lastName,
+      age: 32
+    }
+</code></pre>
         </section>
 
         <!-- ============================================================================= -->
@@ -340,19 +373,21 @@ const person = {
 
           <pre><code class="javascript">
   const person = {
-    firstname: "Klaus",
+    firstName: "Klaus",
     lastName: "Müller",
     age: 32
   }
 
-  const {firstName, lastName} = person;
+  const { firstName, lastName } = person;
   console.log(firstName); // Klaus
   console.log(lastName); // Müller
 
+            </code></pre>
 
-  // umbennen
-  const {lastName: name} = person;
-  console.log(name); // Müller
+          <pre class="fragment"><code class="javascript">
+                // Umbenennen
+                const { lastName: name } = person;
+                console.log(name); // Müller
 
             </code></pre>
         </section>
@@ -373,6 +408,11 @@ greet({
 )};
 
       </code></pre>
+
+          <h4 class="fragment">Beispiel: Bei Arrow-Funktionen</h4>
+          <pre class="fragment"><code class="javascript">
+const greet = ({firstName, lastName}) => `Hello, ${firstName} ${lastName}`;
+                </code></pre>
         </section>
         <!-- ============================================================================= -->
         <section>
@@ -398,11 +438,22 @@ console.log(b) // "b"
                 // name ist String
                 // setName Funktion
           </code></pre>
+
+          <pre class="fragment"><code class="javascript">
+            // Beispiel: Vertauschen von Werten 
+            let first = 1;
+            let last = 2;
+              
+            [last, first] = [first,last];
+              
+            console.log(first); // 2
+            console.log(last); // 1
+          </code></pre>
         </section>
 
         <!-- ============================================================================= -->
         <section>
-          <h3>Erweiterte Objekt-Literale 2</h3>
+          <h3>Erweiterte Objekt-Literale #2</h3>
           <h4>Computed Properties</h4>
 
           <pre><code class="javascript">
@@ -418,6 +469,131 @@ const persons = {
 console.log(persons.ID1.name) // Klaus
 
     </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Erweiterte Objekt-Literale #2</h3>
+          <h4>
+            Symbole erzeugen eindeutigen Wert, nur über die Symbol-Instanz
+            verwendbar
+          </h4>
+
+          <pre><code class="javascript">
+
+const PASSWORD = Symbol();
+
+const person = {
+  name: "Klaus",
+  [PASSWORD]: "secret"
+}
+
+// Direkter Zugriff nur mit PASSWORD möglich:
+person[PASSWORD]; // "secret"
+
+// Property aber grundsätzlich sichtbar:
+console.log(person); // Object { name: "Klaus", Symbol(): "secret" }
+
+
+</code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Map und Set</h3>
+          <h4>Map</h4>
+          <p>
+            Vergleichbar mit einem Objekt, kann aber diverse Typen als Schlüssel
+            enthalten, Länge ist einfach ermittelbar und es ist iterierbar
+          </p>
+          <pre class="fragment"><code class="javascript">
+              // Nur eindeutige Werte
+              const translations = new Map();
+              translations.set("hallo", "hello");
+              translations.set("tschüß", "bye");
+              translations.set("hallo", "hi");
+              translations.set(7, "seven");
+          
+              console.log(translations.size); // 3
+              console.log(translations.get("hallo")); // hi
+              console.log(translations.get(7)); // seven
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Map und Set</h3>
+          <h4>Set</h4>
+          <p>
+            Liste eindeutiger Werte
+          </p>
+          <pre class="fragment"><code class="javascript">
+                // Nur eindeutige Werte
+                const names = new Set();
+                names.add("Klaus");
+                names.add("Susi");
+                names.add("Klaus");
+            
+                console.log(names.size); // 2
+                console.log(names.has("Susi")); // true
+                console.log(names.has("Maja")); // false
+            
+                names.delete("Susi");
+                console.log(names.has("Susi")); // false
+            </code></pre>
+        </section>
+
+        <section>
+          <h3>Iterables #1</h3>
+          <h4>Einige Objekte sind iterierbar (z.B. Array, Set, Map)</h4>
+          <p>Über Iterables kann mit <code>for...of</code> iteriert werden</p>
+
+          <pre class="fragment"><code class="javascript">
+  const namen = ["Klaus", "Susi", "Dieter"];
+  for (name of namen) {
+    console.log(`Hello, ${name}`)
+  }
+
+  // Hello, Klaus 
+  // Hello, Susi 
+  // Hello, Dieter 
+  </code></pre>
+
+          <p class="fragment">Zum Vergleich <code>for...in</code></p>
+          <pre class="fragment"><code class="javascript">
+const namen = ["Klaus", "Susi", "Dieter"];
+
+// Iteriert über die Indices
+for (name in namen) {
+  console.log(`Hello, ${name}`)
+}
+
+// Hello, 0 
+// Hello, 1 
+// Hello, 2
+      </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Iterables #2</h3>
+          <h4>Mit Map</h4>
+          <p>
+            Zurückgeliefert werden Arrays mit den einzelnen Key-Value-Paaren
+          </p>
+
+          <pre><code class="javascript">
+              const translations = new Map();
+              translations.set("hallo", "hello");
+              translations.set("tschüß", "bye");
+          
+              for (t of translations) {
+                console.log(t);
+              }
+
+              // [ "hallo", "hi" ]
+              // [ "tschüß", "bye" ]
+          </code></pre>
         </section>
 
         <section>
@@ -473,10 +649,49 @@ console.log(persons.ID1.name) // Klaus
         <section>
           <h2>Teil 2: Klassen und Module</h2>
         </section>
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Klassen #1</h3>
+
+          <pre><code class="javascript">
+          class Greeter {
+            constructor(phrase) {
+                this.phrase = phrase;
+            }
+
+            greet(name) {
+              return `${this.phrase}, ${name}`
+            }
+            
+            toString() { return `Greeter with phrase ${this.phrase}` ; }
+        }
+      </code>
+    </pre>
+          <p class="fragment">
+            Wichtig: beim Zugriff auf Instanz-Member innerhalb der Klasse immer
+            mit this arbeiten!
+          </p>
+          <h4 class="fragment">Verwendung</h4>
+          <pre class="fragment"><code class="javascript">
+
+// Neue Instanz erzeugen
+const p = new Greeter("Hello");
+// Impliziter Aufruf on toString():
+console.log(p + ""); // Person: Susi
+
+// Methoden-Aufruf
+p.greet("Klaus"); // Greeter with phrase Hello 
+
+// Properties verändern
+p.phrase = "Moin";
+p.greet("Susi"); // Moin, Susi
+      </code></pre>
+        </section>
 
         <!-- ============================================================================= -->
         <section>
-          <h3>JavaScript: Klassen</h3>
+          <h3>Klassen #2</h3>
+          <h4>Getter- und Setter-Methoden</h4>
 
           <pre><code class="javascript">
               class Person {
@@ -492,17 +707,13 @@ console.log(persons.ID1.name) // Klaus
                     this._name = newName;
                 }
                 
-                toString() { return "Person: " + this.name + ""; }
+                toString() { return `Person: ${this.name}`; }
             }
             
             const p = new Person("Susi");
-            p.toString() // Person: Susi
-          </code></pre>
 
-          <p class="fragment">
-            Wichtig: Zugriff auf Instanz-Member innerhalb einer Klasse immer mit
-            <code>this.</code>
-          </p>
+           
+          </code></pre>
 
           <pre class="fragment"><code class="javascript">
               p.name // Susi (getter-Aufruf)
@@ -514,7 +725,7 @@ console.log(persons.ID1.name) // Klaus
 
         <!-- ============================================================================= -->
         <section>
-          <h3>JavaScript: Klassen #2</h3>
+          <h3>JavaScript: Klassen #3</h3>
           <h4>Vererbung</h4>
 
           <pre><code class="javascript">
@@ -525,11 +736,14 @@ console.log(persons.ID1.name) // Klaus
       this._instrument = instrument;
     }
   
-    toString() { return super.toString() + " plays " + this._instrument}
+    toString() { 
+      // Methoden und Felder aus der Oberklasse können mit 'super.' verwendet werden
+      return `${super.toString()} plays ${this._instrument}`;
+    }
   }            
   
   const lemmy = new Musician("Lemmy", "Bass");
-  lemmy.toString(); // Lemmy plays Bass
+  lemmy.toString(); // Person: Lemmy plays Bass
   lemmy.name // // Lemmy
   
   
@@ -537,7 +751,7 @@ console.log(persons.ID1.name) // Klaus
         </section>
         <!-- ============================================================================= -->
         <section>
-          <h3>JavaScript: Klassen #2</h3>
+          <h3>Klassen #4</h3>
           <h4>Statische Funktionen</h4>
 
           <pre><code class="javascript">
@@ -624,6 +838,26 @@ class Person {
     }
   }
                   </code></pre>
+        </section>
+
+        <section>
+          <h3>Übung: Klassen</h3>
+
+          <p>
+            Im Verzeichnis <b>code/uebungen</b> sind drei html-Dateien angelegt
+          </p>
+          <p>
+            Darin stehen jeweils TODOs, Du kannst eine Datei nach der anderen
+            bearbeiten
+          </p>
+          <p>
+            Wenn Du mit einer Datei fertig bist, kannst Du den Code einfach in
+            die folgende Datei übernehmen, da die Übungen auf einander aufbauen
+          </p>
+          <p>
+            Die Datei kannst Du im Browser öffnen, Ausgaben bitte auf der
+            Konsole anschauen.
+          </p>
         </section>
 
         <!-- ============================================================================= -->
@@ -753,6 +987,26 @@ class Person {
 
         <!-- ============================================================================= -->
         <section>
+          <h3>Module im Browser</h3>
+          <p>
+            Um Module im script-Tag im HTML-Code zu verwenden, muss als dort als
+            type "module" angegeben werden
+          </p>
+
+          <pre class="fragment"><code class="javascript">
+            &lt;html>
+              ...
+              &lt;script type="module">
+                import Musician from "./Musician.js";
+
+                const m = new Musician("Lemmy", "Bass");
+              &lt;/script>
+            &lt;/html>
+          </code></pre>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section>
           <h3>Module</h3>
           <h4>Bundling</h4>
 
@@ -769,6 +1023,40 @@ class Person {
             Build "aufgelöst" und in <b>eine</b> Datei geschrieben
           </p>
         </section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Übung: Module</h3>
+          <p>
+            Teile die Beispiel-"Anwendung" aus der Klassen-Übung in Module auf.
+          </p>
+          <p><b>Vorbereitung</b></p>
+          <ol>
+            <li>Wir arbeiten im Verzeichnis <b>code/uebungen/module</b></li>
+            <li>
+              Wenn Du nicht fertig geworden bist, verwende den Lösungsstand aus
+              <b>code/loesungen/klassen/klassen-c.html</b>
+            </li>
+            <li>
+              Du musst in dem Verzeichnis einen HTTP-Server starten, z.B.
+              <code>npx http-server</code>
+            </li>
+          </ol>
+        </section>
+
+ <!-- ============================================================================= -->
+ <section>
+    <h3>Übung: Module</h3>
+    <p>
+      Teile die Beispiel-"Anwendung" aus der Klassen-Übung in Module auf.
+    </p>
+    <p><b>Schritte</b></p>
+    <ol>
+      <li>Verschiebe die Klassen <b>Application</b>, <b>Component</b> und <b>Size</b> jeweils in eigene Module </b></li>
+      <li>Verschiebe <b>Button</b> und <b>InputField</b> in <em>ein gemeinsames</em> Modul (UiComponents.js)</li>
+      <li>Den restlichen Code (also die Verwendung der Klassen) hinterlegst Du in <b>index.html</b></li>
+    </ol>
+  </section>
 
         <!-- ============================================================================= -->
         <section>

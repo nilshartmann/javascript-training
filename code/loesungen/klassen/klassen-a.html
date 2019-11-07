@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Übung #1</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script>
+    // Schreibe eine Klasse 'Size'
+    //  - Die Klasse soll zwei Werte im Konstruktor entgegen nehmen (width und height)
+    //  - Die Klasse soll eine toString()-Methode haben, die die beiden Werte ausgibt
+    //    (zum Beispiel: "Size, height: ..., width: ...")
+
+    // Schreibe eine Klasse 'Component'
+    //  - Die Klasse soll im Konstruktor eine Größe (Size-Klasse) entgegen
+    //    (this._size)
+    //  - Schreibe eine Methode 'render', die einen String mit der Größe zurückgibt
+    //    z.B. "Component, Größe ... "
+
+    // Schreibe eine 2. Klasse "Button", die von der Component abgeleitet ist
+    //  - Der Button soll einen zweiten Parameter bekommen: label
+    //  - Überschreibe die render-Methode, so dass dort die Größe (aus der Oberklasse)
+    //    sowie das Label zurückgegeben wird, zB: "Button, Größe ... mit Label ..."
+
+    // Schreibe eine 3. Klasse "Application":
+    //  - diese legt im Konstruktor ein leeres Array mit dem Namen '_components' an
+    //  - es soll eine Funktion geben 'addComponents', die eine Menge an Komponenten (Component oder Button)
+    //    entgegennimmt und in das Array einfügt
+    //  - es soll eine Funktion 'render' geben, die die render-Funktionen der Komponenten in _components
+    //    aufruft und deren Rückgabewerte jeweils auf der Konsole ausgibt
+
+    // Das sollte funktionieren:
+    // const application = new Application();
+    // application.addComponents(new Component({x: 1, y: 2}), new Button({x: 2, y: 4});
+    // application.addComponents(new Button({x: 7, y: 8}));
+    // application.render()
+
+    // Ausgabe auf der Konsole:
+    //   Component, size: Size: width: 1, height: 2
+    //   Button, size: Size: width: 3, height: 4 with label OK
+    //   Button, size: Size: width: 5, height: 6 with label Cancel
+
+    class Size {
+      constructor(width, height) {
+        this._width = width;
+        this._height = height;
+      }
+
+      toString() {
+        return `Size: width: ${this._width}, height: ${this._height}`;
+      }
+    }
+
+    class Component {
+      constructor(size) {
+        this._size = size;
+      }
+
+      get size() {
+        return this._size;
+      }
+
+      render() {
+        return `Component, size: ${this._size}`;
+      }
+    }
+
+    class Button extends Component {
+      constructor(size, label) {
+        super(size);
+        this._label = label;
+      }
+
+      render() {
+        return `Button, size: ${this.size} with label ${this._label}`;
+      }
+    }
+
+    class Application {
+      constructor() {
+        this._components = [];
+      }
+
+      addComponents(...components) {
+        this._components.push(...components);
+      }
+
+      render() {
+        this._components.forEach(c => console.log(c.render()));
+      }
+    }
+
+    const application = new Application();
+    application.addComponents(
+      new Component(new Size(1, 2)),
+      new Button(new Size(3, 4), "OK")
+    );
+    application.addComponents(new Button(new Size(5, 6), "Cancel"));
+    application.render();
+
+    // Ausgabe auf der Konsole:
+    //   Component, size: Size: width: 1, height: 2
+    //   Button, size: Size: width: 3, height: 4 with label OK
+    //   Button, size: Size: width: 5, height: 6 with label Cancel
+  </script>
+</html>

@@ -1,3 +1,3 @@
-# Webentwicklung mit JavaScript
+# ES6 Workshop
 
-## Einstieg in JavaScript Web-Entwicklung (am Beispiel React)
+## Neuerungen in "modernem" JavaScript

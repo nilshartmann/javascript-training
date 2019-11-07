@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Übung #1</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script>
+    // Erweitere die Klassen aus der vorherigen Übung:
+
+    // Erstelle eine Klasse InputField, die von der Component abgeleitet ist
+    //   - Das InputField soll im Konstruktor einen 'type' entgegen nehmen ("input" oder "password")
+    //   - Das InputField soll die render-Methode überschreiben und neben der Größe auch den Type ausgeben
+    //   - Das InputField soll zwei statische Methoden bekommen, mit denen es erzeugt werden kann
+    //     (Factory-Methoden). Eine statische Methode zum Erzeugen eines Password- und eine zum
+    //     Erzeugen eines Input-Fields.
+    //       - Die statischen Methoden nehmen jeweils nur die Größe entgegen
+    //       - Sie rufen den InputField-Konstruktor mit dem korrekten Typ (password oder input) auf
+
+    // Dann sollte folgendes funktionieren:
+    // const application = new Application();
+    // application.addComponents(
+    //   new Component(new Size(1, 2)),
+    //   new Button(new Size(3, 4), "OK")
+    // );
+    // application.addComponents(new Button(new Size(5, 6), "Cancel"));
+
+    // ==> NEU IN ÜBUNG 2: ==>
+    // application.addComponents(
+    //   InputField.passwordField(new Size(7, 8)),
+    //   InputField.textField(new Size(9, 10))
+    // );
+    //
+    // application.render();
+
+    // Ausgabe auf der Konsole:
+    //   Component, size: Size: width: 1, height: 2
+    //   Button, size: Size: width: 3, height: 4 with label OK
+    //   Button, size: Size: width: 5, height: 6 with label Cancel
+    // ==> NEU IN ÜBUNG 2: ==>
+    //   InputField, size: Size: width: 7, height: 8 with type password
+    //   InputField, size: Size: width: 9, height: 10 with type text
+  </script>
+</html>

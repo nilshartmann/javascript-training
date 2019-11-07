@@ -31,7 +31,9 @@
     }
 
     const p = new Person("Susi");
-    console.log(p.toString()); // Person: Susi
+
+    // Impliziter Aufruf on toString():
+    console.log(p + ""); // Person: Susi
 
     Person.greet();
   </script>

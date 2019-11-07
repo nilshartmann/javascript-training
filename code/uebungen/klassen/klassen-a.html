@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Übung #1</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script>
+    // Schreibe eine Klasse 'Size'
+    //  - Die Klasse soll zwei Werte im Konstruktor entgegen nehmen (width und height)
+    //  - Die Klasse soll eine toString()-Methode haben, die die beiden Werte ausgibt
+    //    (zum Beispiel: "Size, height: ..., width: ...")
+
+    // Schreibe eine Klasse 'Component'
+    //  - Die Klasse soll im Konstruktor eine Größe (Size-Klasse) entgegen
+    //    (this._size)
+    //  - Schreibe eine Methode 'render', die einen String mit der Größe zurückgibt
+    //    z.B. "Component, Größe ... "
+
+    // Schreibe eine 2. Klasse "Button", die von der Component abgeleitet ist
+    //  - Der Button soll einen zweiten Parameter bekommen: label
+    //  - Überschreibe die render-Methode, so dass dort die Größe (aus der Oberklasse)
+    //    sowie das Label zurückgegeben wird, zB: "Button, Größe ... mit Label ..."
+
+    // Schreibe eine 3. Klasse "Application":
+    //  - diese legt im Konstruktor ein leeres Array mit dem Namen '_components' an
+    //  - es soll eine Funktion geben 'addComponents', die eine Menge an Komponenten (Component oder Button)
+    //    entgegennimmt und in das Array einfügt
+    //  - es soll eine Funktion 'render' geben, die die render-Funktionen der Komponenten in _components
+    //    aufruft und deren Rückgabewerte jeweils auf der Konsole ausgibt
+
+    // Das sollte funktionieren:
+    // const application = new Application();
+    // application.addComponents(new Component({x: 1, y: 2}), new Button({x: 2, y: 4});
+    // application.addComponents(new Button({x: 7, y: 8}));
+    // application.render()
+
+    // Ausgabe auf der Konsole:
+    //   Component, size: Size: width: 1, height: 2
+    //   Button, size: Size: width: 3, height: 4 with label OK
+    //   Button, size: Size: width: 5, height: 6 with label Cancel
+  </script>
+</html>
