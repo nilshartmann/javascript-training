@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Übung: Teil 1</title>
+    <meta charset="utf-8" />
+  </head>
+  <body></body>
+
+  <script>
+    // ==== SCHRITT 1 ============================================================
+    // Schreibe eine Funktion createGreeting
+    //  - Diese erwartet zwei Parameter (name und phrase)
+    //  - Der zweite Prarameter soll mit "Hello" vorbelegt sein,
+    //    für den Fall, dass er beim Aufruf nicht angegeben wird
+    //  - Die Funktion liefert ein Objekt zurück, dass aus den beiden
+    //    Angaben besteht (verwende Objekt Shorthand Notation)
+
+    // - Rufe die Funktion für zwei Grüße auf (einmal mit zwei Parametern und einaml
+    //   mit einem
+    // - Gib die Grüße mit console.log aus
+
+    function createGreeting(name, phrase = "Hello") {
+      return {
+        name,
+        phrase
+      };
+    }
+
+    // Das soll dann funktionieren:
+    const greeting = createGreeting("Klaus");
+    const greeting2 = createGreeting("Welt", "Hallo");
+
+    console.log(greeting);
+    //  => Ausgabe: Object { name: "Klaus", phrase: "Hello" }
+    console.log(greeting2);
+    //  => Ausgabe: Object { name: "Welt", phrase: "Hallo" }
+
+    // ==== SCHRITT 2 ============================================================
+    // > Schreibe eine Funktion createGreetingsFor, die eine Phrase und
+    //   ein beliebge Anzahl von Namen erwartet (als Parameter)
+    //    - Erzeuge darin mit createGreeting, das Du oben erzeugt hast,
+    //      für jeden Namen einen Gruß
+    //    - Füge die Grüße in eine Liste (Set oder Array) ein
+    //    - Gib die Liste zurück
+    // > Rufe die Funktion auf und erzeuge Grüße für "Susi" und "Maja"
+    // > Füge die beiden neuen Grüße sowie die Grüße aus Übung eins in einem
+    //   neuen Array zusammen
+    // > Gib jeden Gruß in der neuen Liste auf der Konsole als String aus
+    //    - Verwende dazu forEach und übergib eine Arrow-Funktion, in der Du den
+    //      String formatierst und ausgbist
+    //    - Die Ausgabe solltest Du mit einem Template-String formatieren
+    //      so dass ein lesbarer Gruß erscheint. Die Phrase soll in Großbuchstaben
+    //      ausgegeben werden
+    //    - Kannst Du den Parameter für die Arrow-Funktion mit Destructuring hinschreiben?
+
+    //
+    function createGreetingsFor(phrase, ...names) {
+      const result = [];
+
+      for (name of names) {
+        result.push(createGreeting(name, phrase));
+      }
+
+      return result;
+    }
+
+    const greetings = createGreetingsFor("Hello", "Susi", "Maja");
+    const allGreetings = [...greetings, greeting, greeting2];
+    allGreetings.forEach(({ phrase, name }) =>
+      console.log(`${phrase.toUpperCase()} ${name}`)
+    );
+
+    // Ausgabe
+    //   HELLO Susi
+    //   HELLO Maja
+    //   HELLO Klaus
+    //   HALLO Welt
+  </script>
+</html>
