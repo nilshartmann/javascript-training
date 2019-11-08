@@ -672,11 +672,11 @@ for (name in namen) {
           </code></pre>
         </section>
 
-                <!-- ============================================================================= -->
-                <section>
-                  <h3>Spread Operator</h3>
-                  <p>Beispiel: Ersatz für concat</p>
-                  <pre class="fragment"><code class="javascript">
+        <!-- ============================================================================= -->
+        <section>
+          <h3>Spread Operator</h3>
+          <p>Beispiel: Ersatz für concat</p>
+          <pre class="fragment"><code class="javascript">
                     const values = [ "a", "b", "c"];
 
                     const newValues = values.concat("d", "e");
@@ -689,7 +689,7 @@ for (name in namen) {
                     // [ "a", "b", "c", ["d", "e"]]
                   </code></pre>
 
-                  <pre class="fragment"><code class="javascript">
+          <pre class="fragment"><code class="javascript">
                       const values = [ "a", "b", "c"];
   
                       const newValues = [...values, "d", "e" ];
@@ -701,8 +701,8 @@ for (name in namen) {
                       const newValues3 = [...values, ["d", "e"]);
                       // [ "a", "b", "c", ["d", "e"]]
                     </code></pre>
-                </section>
-        
+        </section>
+
         <section>
           <h3>Spread Operator</h3>
           <p>Kann Objekte kopieren</p>
@@ -712,7 +712,7 @@ for (name in namen) {
     const newPerson = {...person};
     // newPerson.name: Klaus, newPerson.age: 32
   </code></pre>
-  <pre class="fragment"><code class="javascript">
+          <pre class="fragment"><code class="javascript">
 
 
     // hintere Werte überschreiben vordere
@@ -720,23 +720,45 @@ for (name in namen) {
     // newPerson.name: Klaus, newPerson.age: 32
 
      </code></pre>
-     <pre class="fragment"><code class="javascript">
+          <pre class="fragment"><code class="javascript">
     // hintere Werte überschreiben vordere
     const newPerson = {...person, name: "Peter"};
     // newPerson.name: Peter, newPerson.age: 32
             </code></pre>
         </section>
 
+        <!-- ============================================================================= -->
         <section>
-            <h3>Object.assign()</h3>
-            <p>Ähnlich wie Spread, führt Objekte zusammen</p>
-            <pre class="fragment"><code class="javascript">
+          <h3>Spread Operator</h3>
+          <p>Macht nur flache Kopien!</p>
+          <pre class="fragment"><code class="javascript">
+      const person = { name: "Klaus", age: 32, address: { city: "Hamburg"}};
+  
+      const newPerson = {...person};
+      newPerson.address.city = "München";
+
+      newPerson.address.city; // München 😶
+      person.address.city; // München 😶
+    </code></pre>
+
+          <p class="fragment">
+            "Deep Copies" z.B. mit
+            <a href="https://lodash.com/docs/4.17.15#cloneDeep"
+              >deepClone von lodash</a
+            >
+          </p>
+        </section>
+
+        <section>
+          <h3>Object.assign()</h3>
+          <p>Ähnlich wie Spread, führt Objekte zusammen</p>
+          <pre class="fragment"><code class="javascript">
       const person = { name: "Klaus", age: 32};
   
       const newPerson = Object.assign({}, person, { city: "Hamburg"});
       // newPerson.name: Klaus, newPerson.age: 32, newPerson.city: Hamburg
     </code></pre>
-</section>  
+        </section>
 
         <!-- ============================================================================= -->
         <section>
@@ -843,7 +865,7 @@ p.greet("Susi"); // Moin, Susi
     }
   
     toString() { 
-      // Methoden und Felder aus der Oberklasse können mit 'super.' verwendet werden
+      // Methoden aus der Oberklasse können mit 'super.' aufgerufen werden
       return `${super.toString()} plays ${this._instrument}`;
     }
   }            
