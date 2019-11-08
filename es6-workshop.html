@@ -672,6 +672,38 @@ for (name in namen) {
           </code></pre>
         </section>
 
+                <!-- ============================================================================= -->
+                <section>
+                  <h3>Spread Operator</h3>
+                  <p>Beispiel: Ersatz für concat</p>
+                  </p>
+                  <pre class="fragment"><code class="javascript">
+                    const values = [ "a", "b", "c"];
+
+                    const newValues = values.concat("d", "e");
+                    // [ "a", "b", "c", "d", "e"]
+
+                    const newValues2 = values.concat(["d", "e"]);
+                    // [ "a", "b", "c", "d", "e"]
+
+                    const newValues3 = values.concat([["d", "e"]]);
+                    // [ "a", "b", "c", ["d", "e"]]
+                  </code></pre>
+
+                  <pre class="fragment"><code class="javascript">
+                      const values = [ "a", "b", "c"];
+  
+                      const newValues = [...values, "d", "e" ];
+                      // [ "a", "b", "c", "d", "e"]
+  
+                      const newValues2 = [...values, ...["d", "e"]);
+                      // [ "a", "b", "c", "d", "e"]
+  
+                      const newValues3 = [...values, ["d", "e"]);
+                      // [ "a", "b", "c", ["d", "e"]]
+                    </code></pre>
+                </section>
+        
         <section>
           <h3>Spread Operator</h3>
           <p>Kann Objekte kopieren</p>
@@ -680,17 +712,32 @@ for (name in namen) {
 
     const newPerson = {...person};
     // newPerson.name: Klaus, newPerson.age: 32
+  </code></pre>
+  <pre class="fragment"><code class="javascript">
+
 
     // hintere Werte überschreiben vordere
     const newPerson = {name: "Peter", ...person};
     // newPerson.name: Klaus, newPerson.age: 32
 
-    
+     </code></pre>
+     <pre class="fragment"><code class="javascript">
     // hintere Werte überschreiben vordere
     const newPerson = {...person, name: "Peter"};
     // newPerson.name: Peter, newPerson.age: 32
             </code></pre>
         </section>
+
+        <section>
+            <h3>Object.assign()</h3>
+            <p>Ähnlich wie Spread, führt Objekte zusammen</p>
+            <pre class="fragment"><code class="javascript">
+      const person = { name: "Klaus", age: 32};
+  
+      const newPerson = Object.assign({}, person, { city: "Hamburg"});
+      // newPerson.name: Klaus, newPerson.age: 32, newPerson.city: Hamburg
+    </code></pre>
+</section>  
 
         <!-- ============================================================================= -->
         <section>
@@ -729,7 +776,7 @@ for (name in namen) {
     </pre>
           <p class="fragment">
             Wichtig: beim Zugriff auf Instanz-Member innerhalb der Klasse immer
-            mit this arbeiten!
+            mit <b>this</b> arbeiten!
           </p>
           <h4 class="fragment">Verwendung</h4>
           <pre class="fragment"><code class="javascript">
